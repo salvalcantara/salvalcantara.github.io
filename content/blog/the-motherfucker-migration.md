@@ -1,6 +1,6 @@
 +++
 date = "2017-08-24T19:49:30+02:00"
-title = "The mother fucker migration"
+title = "The motherfucker migration"
 draft = true
 
 +++
