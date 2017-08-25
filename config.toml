@@ -1,0 +1,32 @@
+languageCode = "en-US"
+title = "Salva Alcántara"
+baseurl = "http://salvalcantara.com/"
+theme = "cocoa-eh"
+builddrafts = false
+canonifyurls = true
+contentdir = "content"
+layoutdir = "layouts"
+publishdir = "public"
+author = "Salva Alcántara"
+disqusshortname = ""
+pluralizelisttitles = false
+
+[permalinks]
+blog = "blog/:slug/"
+
+[params]
+dateform = "Jan 2, 2006"
+dateformfull = "Mon Jan 2 2006 15:04:05 EST"
+description = "Example blog"
+copyright = "Copyright © 2017 Salva Alcántara"
+logofile = "img/logo.png"
+faviconfile = "img/favicon.png"
+highlightjs = true
+progressively = true
+latestpostcount = 5
+github = "salvalcantara"
+email = "salva@salvalcantara.com"
+linkedin = "salvalcantara"
+twitter = "salvalcantara"
+social_banner = "img/banner.png"
+
