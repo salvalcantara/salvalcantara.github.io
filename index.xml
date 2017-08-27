@@ -7,9 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2017 Salva Alcántara</copyright>
+    <lastBuildDate>Thu, 24 Aug 2017 19:53:00 +0200</lastBuildDate>
     
 	<atom:link href="http://salvalcantara.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>about</title>
+      <link>http://salvalcantara.com/about/</link>
+      <pubDate>Thu, 24 Aug 2017 19:53:00 +0200</pubDate>
+      
+      <guid>http://salvalcantara.com/about/</guid>
+      <description>Hi! My name is Salva Alcántara. I currently live in Rubí (Barcelona), Spain, with my beautiful wife and son. I studied Computer Science/Engineering at the Universitat Autònoma de Barcelona. At the same university, I pursued a PhD on Industrial Informatics/Automatic Control.
+During my thesis years, I made two research stays: one at the Shanghai Jiao Tong University, supervised by Prof. Weidong Zhang, and the second one at the Norwegian University of Science and Technology, supervised by prof.</description>
+    </item>
     
   </channel>
 </rss>

@@ -3,12 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://salvalcantara.com/about/</loc>
+    <lastmod>2017-08-24T19:53:00+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://salvalcantara.com/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://salvalcantara.com/</loc>
+    <lastmod>2017-08-24T19:53:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
