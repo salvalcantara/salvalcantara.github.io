@@ -8,8 +8,14 @@ contentdir = "content"
 layoutdir = "layouts"
 publishdir = "public"
 author = "Salva Alcántara"
-disqusshortname = ""
+disqusshortname = "salvalcantara-com"
 pluralizelisttitles = false
+enableEmoji = true
+
+[taxonomies]
+tag = "tags"
+category = "categories"
+series = "series"
 
 [permalinks]
 blog = "blog/:slug/"
