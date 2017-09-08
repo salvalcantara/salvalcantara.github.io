@@ -303,7 +303,7 @@ class Migration(migrations.Migration):
         &quot;ALTER TABLE %s DROP INDEX %s_id&quot; % (pivot_table, related_model_name))
 </code></pre>
 
-<p>As you can see, there is nothing fancy here, just a lot of unpleasant work to do to fix a major pitfall.
+<p>As you can see, there is nothing fancy here, just a lot of unpleasant work to fix a major pitfall.
 For completeness, here is the code for <code>do_the_final_lifting</code> function too:</p>
 
 <pre><code class="language-python">def do_the_final_lifting(apps, schema_editor):
