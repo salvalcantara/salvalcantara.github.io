@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Series on Salva Alcántara</title>
+    <link>http://salvalcantara.com/series/</link>
+    <description>Recent content in Series on Salva Alcántara</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>Copyright © 2017 Salva Alcántara</copyright>
+    <lastBuildDate>Thu, 24 Aug 2017 19:49:30 +0200</lastBuildDate>
+    
+	<atom:link href="http://salvalcantara.com/series/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Django</title>
+      <link>http://salvalcantara.com/series/django/</link>
+      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
+      
+      <guid>http://salvalcantara.com/series/django/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

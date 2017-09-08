@@ -7,9 +7,46 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2017 Salva Alcántara</copyright>
+    <lastBuildDate>Thu, 24 Aug 2017 19:49:30 +0200</lastBuildDate>
     
 	<atom:link href="http://salvalcantara.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Development</title>
+      <link>http://salvalcantara.com/tags/development/</link>
+      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
+      
+      <guid>http://salvalcantara.com/tags/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Django</title>
+      <link>http://salvalcantara.com/tags/django/</link>
+      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
+      
+      <guid>http://salvalcantara.com/tags/django/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Migrations</title>
+      <link>http://salvalcantara.com/tags/migrations/</link>
+      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
+      
+      <guid>http://salvalcantara.com/tags/migrations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>http://salvalcantara.com/tags/python/</link>
+      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
+      
+      <guid>http://salvalcantara.com/tags/python/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

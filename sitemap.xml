@@ -8,7 +8,54 @@
   </url>
   
   <url>
+    <loc>http://salvalcantara.com/blog/the-motherfucker-migration/</loc>
+    <lastmod>2017-08-24T19:49:30+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://salvalcantara.com/blog/</loc>
+    <lastmod>2017-08-24T19:49:30+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://salvalcantara.com/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://salvalcantara.com/tags/development/</loc>
+    <lastmod>2017-08-24T19:49:30+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://salvalcantara.com/categories/development/</loc>
+    <lastmod>2017-08-24T19:49:30+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://salvalcantara.com/tags/django/</loc>
+    <lastmod>2017-08-24T19:49:30+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://salvalcantara.com/series/django/</loc>
+    <lastmod>2017-08-24T19:49:30+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://salvalcantara.com/tags/migrations/</loc>
+    <lastmod>2017-08-24T19:49:30+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://salvalcantara.com/tags/python/</loc>
+    <lastmod>2017-08-24T19:49:30+02:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -19,7 +66,14 @@
   </url>
   
   <url>
+    <loc>http://salvalcantara.com/series/</loc>
+    <lastmod>2017-08-24T19:49:30+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://salvalcantara.com/tags/</loc>
+    <lastmod>2017-08-24T19:49:30+02:00</lastmod>
     <priority>0</priority>
   </url>
   
