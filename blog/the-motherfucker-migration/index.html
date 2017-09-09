@@ -1253,6 +1253,38 @@ For completeness, here is the code for <code>do_the_final_lifting</code> too:</p
         (pivot_table, related_model_name, related_model_name, model_name))
 </code></pre>
 
+<p>With the above migration in place, we are all set to go:</p>
+
+<pre><code>./manage.py migrate app
+</code></pre>
+
+<pre><code>mysql&gt; select * from app_author;
++---------------+----+
+| name          | id |
++---------------+----+
+| A. Visioli    |  1 |
+| C. Pedret     |  2 |
+| F. Padula     |  3 |
+| R. Vilanova   |  4 |
+| S. Alcántara  |  5 |
+| S. Skogestad  |  6 |
++---------------+----+
+</code></pre>
+
+<pre><code>mysql&gt; select * from app_article_authors;
++----+------------+-----------+
+| id | article_id | author_id |
++----+------------+-----------+
+|  1 |          1 |         2 |
+|  3 |          1 |         4 |
+|  2 |          1 |         5 |
+|  5 |          2 |         1 |
+|  4 |          2 |         3 |
+|  6 |          2 |         5 |
+|  7 |          3 |         6 |
++----+------------+-----------+
+</code></pre>
+
 <p>That&rsquo;s all! Hope someone finds it useful. Any feedback is welcome, so feel free to leave your comments. 😉</p>
 <div class="footnotes">
 
