@@ -255,7 +255,7 @@ def recreate_constraints_and_indices_in_pivot_table():
         (pivot_table, related_model_name, related_model_name, model_name))
 ```
 
-That's all! Hope someone finds it useful :wink:. Any feedback is welcome, so feel free to leave your comments.
+That's all! Hope someone finds it useful. Any feedback is welcome, so feel free to leave your comments. :wink:
 
 [^1]: implicitly, Django adds the following line
 
