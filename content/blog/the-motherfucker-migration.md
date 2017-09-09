@@ -255,6 +255,41 @@ def recreate_constraints_and_indices_in_pivot_table():
         (pivot_table, related_model_name, related_model_name, model_name))
 ```
 
+With the above migration in place, we are all set to go:
+
+```
+./manage.py migrate app
+```
+
+```
+mysql> select * from app_author;
++---------------+----+
+| name          | id |
++---------------+----+
+| A. Visioli    |  1 |
+| C. Pedret     |  2 |
+| F. Padula     |  3 |
+| R. Vilanova   |  4 |
+| S. Alcántara  |  5 |
+| S. Skogestad  |  6 |
++---------------+----+
+```
+
+```
+mysql> select * from app_article_authors;
++----+------------+-----------+
+| id | article_id | author_id |
++----+------------+-----------+
+|  1 |          1 |         2 |
+|  3 |          1 |         4 |
+|  2 |          1 |         5 |
+|  5 |          2 |         1 |
+|  4 |          2 |         3 |
+|  6 |          2 |         5 |
+|  7 |          3 |         6 |
++----+------------+-----------+
+```
+
 That's all! Hope someone finds it useful. Any feedback is welcome, so feel free to leave your comments. :wink:
 
 [^1]: implicitly, Django adds the following line
