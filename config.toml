@@ -9,6 +9,7 @@ layoutdir = "layouts"
 publishdir = "public"
 author = "Salva Alcántara"
 disqusshortname = "salvalcantara-com"
+googleAnalytics = "UA-106158048-1"
 pluralizelisttitles = false
 enableEmoji = true
 
