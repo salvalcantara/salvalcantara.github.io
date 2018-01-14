@@ -13,7 +13,7 @@ The genesis. One day my brother played a song from [basshunter](https://en.wikip
 
 [![Alt text](https://img.youtube.com/vi/qTsaS1Tm-Ic/hqdefault.jpg)](https://www.youtube.com/watch?v=qTsaS1Tm-Ic)
 
-After listening to the song several times, even my little son became a huge fan! The problem was, that, not having played DotA in my entire life, the lyrics didn't mean much to me. Being a IOTA fan, however, I thought that a remake could be funny.
+After listening to the song several times, even my little son became a huge fan! The problem was that, not having played DotA in my entire life, the lyrics didn't mean much to me. Being a IOTA fan, however, I thought that a remake could be funny.
 
 Long story short, I subsequently tried to reach *basshunter* on his twitter account ([here](https://twitter.com/salvalcantara/status/951202099316101120) you can see the original tweet). I also published [this](https://www.reddit.com/r/Iota/comments/7punpy/let_us_vote_for_a_remake_of_the_basshunter_dota/?ref=share&ref_source=link) post on the IOTA subreddit, where I proposed to vote for the best potential remake among all. As of this writing, so far I have not received any feedback from *basshunter*, nor any tentative lyrics from the subreddit. However, I've got some likes and/or positive comments so I finally decided to come up with my own remake:
 
