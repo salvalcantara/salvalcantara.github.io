@@ -1,5 +1,5 @@
 +++
-title = "The IOTA Song"
+title = "The IOTA song"
 date = 2018-01-14T17:32:32+01:00
 tags = [ "basshunter", "dota", "iota", "remake" ]
 categories = [ "cryptocurrencies" ]
