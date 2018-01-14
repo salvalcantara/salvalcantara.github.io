@@ -16,9 +16,9 @@
 <meta property="og:site_name" content="Salva Alcántara" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://salvalcantara.com/blog/the-motherfucker-migration/" />
-<meta property="og:title" content="The motherfucker migration" />
-<meta property="twitter:title" content="The motherfucker migration">
+<meta property="og:url" content="http://salvalcantara.com/categories/cryptocurrencies/" />
+<meta property="og:title" content="Cryptocurrencies" />
+<meta property="twitter:title" content="Cryptocurrencies">
 
     <meta property="og:image" content="http://salvalcantara.com/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Salva Alcántara - The motherfucker migration 
+     Salva Alcántara - Cryptocurrencies 
 
 </title>
-<link rel="canonical" href="http://salvalcantara.com/blog/the-motherfucker-migration/">
+<link rel="canonical" href="http://salvalcantara.com/categories/cryptocurrencies/">
 
 
 <style media="screen">
@@ -935,6 +935,8 @@ margin-left: -4%;
 
 
 
+  <link href="http://salvalcantara.com/categories/cryptocurrencies/index.xml" rel="alternate" type="application/rss+xml" title="Salva Alcántara" />
+
 
 </head>
 
@@ -942,7 +944,7 @@ margin-left: -4%;
 <body>
 
 
-<section class="header">
+<section class="header header-home">
 
     <div class="container">
         <a href="http://salvalcantara.com/"><img class="logo" src="http://salvalcantara.com/img/logo.png" alt="logo" /></a>
@@ -969,383 +971,24 @@ margin-left: -4%;
     </div>
 </section>
 
-
-<section class="main post non-narrow zero-top-spacing">
+<section class="main">
     <div class="container">
         <div class="content">
-            <div class="front-matter">
-                <div class="title-container">
-                    <div class="page-heading">
-
-    The motherfucker migration
-
-</div>
-
-                </div>
-                <div class="meta">
-                    <div class="date" title="Thu Aug 24 2017 19:49:30 EST">Aug 24, 2017</div>
+            <div class="posts">
+                <div class="page-heading">Posts about Cryptocurrencies</div>
+                <ul>
                     
-                        
+                        <li class="post-item">
+    <span class="meta">Jan 14, 2018</span>
+    <a href="http://salvalcantara.com/blog/the-iota-song/"><span>The IOTA Song</span></a>
+</li>
+
                     
-                    <div class="reading-time"><div class="middot"></div>6 minute read</div>
-                    <div class="tags">
-                        <ul>
-                          
-                            <div class="middot"></div>
-                            <li><a href="http://salvalcantara.com/tags/development">development</a> </li>
-                          
-                            <div class="middot"></div>
-                            <li><a href="http://salvalcantara.com/tags/django">django</a> </li>
-                          
-                            <div class="middot"></div>
-                            <li><a href="http://salvalcantara.com/tags/migrations">migrations</a> </li>
-                          
-                            <div class="middot"></div>
-                            <li><a href="http://salvalcantara.com/tags/python">python</a> </li>
-                          
-                        </ul>
-                    </div>
-                    <div class="tags">
-                        <ul>
-                          
-                          
-                        </ul>
-                    </div>
-                </div>
+                </ul>
             </div>
-            <div class="markdown">
-                
-    
-    <p>This (my very first) post covers what I&rsquo;ve come to refer as the <em>motherfucker</em> migration in Django. You can find the accompanying code, as well as detailed instructions on how to apply it, <a href="https://github.com/salvalcantara/django-change-pk">here</a>.</p>
-
-<p>For the sake of explanation, let&rsquo;s consider a Django app with the following two (oversimplified) related models:</p>
-
-<pre><code class="language-python">class Author(models.Model):
-    name = models.CharField(max_length=30, primary_key=True)
-</code></pre>
-
-<pre><code>class Article(models.Model):
-    title = models.CharField(max_length=140)
-    authors = models.ManyToManyField(Author, related_name='articles')
-</code></pre>
-
-<p>In short, authors write articles, and an article can have one or more authors. Note the following crucial point: the Author model specifies <em>name</em> as a custom primary key (PK) field, instead of relying on Django for generating the default (autoincrement) PK as done in Article.<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup> So, since <em>name</em> acts as the PK for the authors table, one cannot change an author&rsquo;s name; intead, a new author would be created.<sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup> This is clearly undesirable and you might be wondering why someone would want to mess up the database in the first place. Well, the reasons behind such a pitfall are beyond the scope of this post, but suffice it to say that I have come accross this problem myself, and I am not apparently alone.<sup class="footnote-ref" id="fnref:3"><a rel="footnote" href="#fn:3">3</a></sup></p>
-
-<p>Now, what can we do about it? First thing would be to fix the Author class:</p>
-
-<pre><code class="language-python">class Author(models.Model):
-    name = models.CharField(max_length=30, unique=True)
-</code></pre>
-
-<p>By replacing <code>primary_key=True</code> with <code>unique=True</code> we are implicitly using the default autoincrement <code>id</code> field as the new PK.<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup> This minor change alone won&rsquo;t do the trick, however, as confirmed by the output of the <code>manage.py makemigrations</code> command:</p>
-
-<pre><code>You are trying to add a non-nullable field 'id' to author without a default; 
-we can't do that (the database needs something to populate existing rows).
-Please select a fix:
- 1) Provide a one-off default now (will be set on all existing rows)
- 2) Quit, and let me add a default in models.py 
-</code></pre>
-
-<p>To make things even worse, we also have the pivot table and the corresponding foreign key constraint. Addressing all these nuances requires us to write a custom (<em>motherfucker</em>) migration, since there is no way that Django can generate it for us automatically. Moreover, since it is necessary to execute some database-specific DDL statements to change the <em>schema</em>, in this post we will restrict ourselves to MySQL.</p>
-
-<p>At this point, it might help to look at some sample data:</p>
-
-<pre><code>mysql&gt; select * from app_author;
-+---------------+
-| name          |
-+---------------+
-| A. Visioli    |
-| C. Pedret     |
-| F. Padula     |
-| R. Vilanova   |
-| S. Alcántara  |
-| S. Skogestad  |
-+---------------+
-</code></pre>
-
-<pre><code>mysql&gt; select * from app_article;
-+----+-------------------------------------------------------------------------------+
-| id | title                                                                         |
-+----+-------------------------------------------------------------------------------+
-|  1 | PID control in terms of robustness/performance and servo/regulator trade-offs |
-|  2 | H-infinity control of fractional linear systems                               |
-|  3 | Simple analytic rules for model reduction and PID controller tuning           |
-+----+-------------------------------------------------------------------------------+
-</code></pre>
-
-<pre><code>mysql&gt; select * from app_article_authors;
-+----+------------+---------------+
-| id | article_id | author_id     |
-+----+------------+---------------+
-|  1 |          1 | C. Pedret     |
-|  3 |          1 | R. Vilanova   |
-|  2 |          1 | S. Alcántara  |
-|  5 |          2 | A. Visioli    |
-|  4 |          2 | F. Padula     |
-|  6 |          2 | S. Alcántara  |
-|  7 |          3 | S. Skogestad  |
-+----+------------+---------------+
-</code></pre>
-
-<p>Without further ado, here is how the migration looks like:</p>
-
-<pre><code class="language-python">app_name = 'app'
-model_name = 'author'
-related_model_name = 'article'
-model_table = '%s_%s' % (app_name, model_name)
-pivot_table = '%s_%s_%ss' % (app_name, related_model_name, model_name)
-fk_name, index_name = None, None 
-
-
-class Migration(migrations.Migration):
-    ...
-
-    operations = [
-        migrations.AddField(
-            model_name=model_name,
-            name='id',
-            field=models.IntegerField(null=True),
-            preserve_default=True,
-        ),
-        migrations.RunPython(do_most_of_the_surgery),
-        migrations.AlterField(
-            model_name=model_name,
-            name='id',
-            field=models.AutoField(
-                verbose_name='ID', serialize=False, auto_created=True,
-                primary_key=True),
-            preserve_default=True,
-        ),
-        migrations.AlterField(
-            model_name=model_name,
-            name='name',
-            field=models.CharField(max_length=30, unique=True),
-            preserve_default=True,
-        ),
-        migrations.RunPython(do_the_final_lifting),
-    ]
-</code></pre>
-
-<p>In summary, the migration goes through the following operations:</p>
-
-<ul>
-<li>Declare the new <code>id</code> column in the authors table nullable</li>
-<li>Run the <code>do_most_of_the_surgery</code> function</li>
-<li>Declare the <code>id</code> field as the new (autoincrement) PK column</li>
-<li>Alter the former PK field (<code>name</code>) accordingly</li>
-<li>Do some extra final work by calling <code>do_the_final_lifting</code></li>
-</ul>
-
-<p>Let us turn our attention to the <code>do_most_of_the_surgery</code> function now:</p>
-
-<pre><code class="language-python">def do_most_of_the_surgery(apps, schema_editor):
-    models = {}
-    Model = apps.get_model(app_name, model_name)
-
-    # Generate values for the new id column
-    for i, o in enumerate(Model.objects.all()):
-        o.id = i + 1
-        o.save()
-        models[o.name] = o.id
-
-    # Work on the pivot table before going on
-    drop_constraints_and_indices_in_pivot_table()
-
-    # Drop current pk index and create the new one
-    cursor.execute(
-        &quot;ALTER TABLE %s DROP PRIMARY KEY&quot; % model_table
-    )
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD PRIMARY KEY (id)&quot; % model_table
-    )
-
-    # Rename the fk column in the pivot table
-    cursor.execute(
-        &quot;ALTER TABLE %s &quot;
-        &quot;CHANGE %s_id %s_id_old %s NOT NULL&quot; %
-        (pivot_table, model_name, model_name, 'VARCHAR(30)'))
-    # ... and create a new one for the new id
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD COLUMN %s_id INT(11)&quot; %
-        (pivot_table, model_name))
-
-    # Fill in the new column in the pivot table
-    cursor.execute(&quot;SELECT id, %s_id_old FROM %s&quot; % (model_name, pivot_table))
-    for row in cursor:
-        id, key = row[0], row[1]
-        model_id = models[key]
-
-        inner_cursor = connection.cursor()
-        inner_cursor.execute(
-            &quot;UPDATE %s SET %s_id=%d WHERE id=%d&quot; %
-            (pivot_table, model_name, model_id, id))
-
-    # Drop the old (renamed) column in pivot table, no longer needed
-    cursor.execute(
-        &quot;ALTER TABLE %s DROP COLUMN %s_id_old&quot; %
-        (pivot_table, model_name))
-</code></pre>
-
-<p>where</p>
-
-<pre><code class="language-python">def drop_constraints_and_indices_in_pivot_table():
-    global fk_name, index_name
-
-    fk_postfix = '%%_fk_%s_%s_%s' % (app_name, model_name, 'name')
-    cursor.execute(
-        &quot;SELECT constraint_name FROM information_schema.table_constraints &quot;
-        &quot;WHERE table_name='%s' AND constraint_name LIKE &quot;
-        &quot;'%s'&quot; % (pivot_table, fk_postfix))
-    fk_name = cursor.fetchone()[0]
-
-    cursor.execute(
-        &quot;SELECT index_name FROM information_schema.statistics &quot;
-        &quot;WHERE table_name='%s' AND index_name LIKE &quot;
-        &quot;'%s_%%' AND column_name='%s_id'&quot; %
-        (pivot_table, pivot_table, model_name))
-    index_name = cursor.fetchone()[0]
-
-    cursor.execute(
-        &quot;ALTER TABLE %s DROP FOREIGN KEY %s&quot; % (pivot_table, fk_name))
-    cursor.execute(
-        &quot;ALTER TABLE %s DROP INDEX %s&quot; % (pivot_table, index_name))
-    cursor.execute(
-        &quot;ALTER TABLE %s DROP INDEX %s_id&quot; % (pivot_table, related_model_name))
-</code></pre>
-
-<p>As you can see, there is nothing fancy here, just a lot of unpleasant work to fix a major pitfall.
-For completeness, here is the code for <code>do_the_final_lifting</code> too:</p>
-
-<pre><code class="language-python">def do_the_final_lifting(apps, schema_editor):
-    # Create a new unique index for the old pk column
-    index_prefix = '%s_id' % model_table
-    new_index_prefix = '%s_name' % model_table
-    new_index_name = index_name.replace(index_prefix, new_index_prefix)
-
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD UNIQUE KEY %s (%s)&quot; %
-        (model_table, new_index_name, 'name'))
-
-    # Finally, work on the pivot table
-    recreate_constraints_and_indices_in_pivot_table()
-</code></pre>
-
-<p>where</p>
-
-<pre><code class="language-python">def recreate_constraints_and_indices_in_pivot_table():
-    cursor.execute(
-        &quot;ALTER TABLE %s MODIFY %s_id INT(11) NOT NULL&quot; %
-        (pivot_table, model_name))
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD INDEX %s (%s_id)&quot; %
-        (pivot_table, index_name, model_name))
-
-    fk_postfix = '_fk_%s_%s_%s' % (app_name, model_name, 'name')
-    new_fk_postfix = '_fk_%s_%s_%s' % (app_name, model_name, 'id')
-    new_fk_name = fk_name.replace(fk_postfix, new_fk_postfix)
-
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD CONSTRAINT &quot;
-        &quot;%s FOREIGN KEY (%s_id) REFERENCES %s (id)&quot; %
-        (pivot_table, new_fk_name, model_name, model_table))
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD UNIQUE KEY %s_id (%s_id, %s_id)&quot; %
-        (pivot_table, related_model_name, related_model_name, model_name))
-</code></pre>
-
-<p>With the above migration in place, we are all set to go:</p>
-
-<pre><code>./manage.py migrate app
-</code></pre>
-
-<pre><code>mysql&gt; select * from app_author;
-+---------------+----+
-| name          | id |
-+---------------+----+
-| A. Visioli    |  1 |
-| C. Pedret     |  2 |
-| F. Padula     |  3 |
-| R. Vilanova   |  4 |
-| S. Alcántara  |  5 |
-| S. Skogestad  |  6 |
-+---------------+----+
-</code></pre>
-
-<pre><code>mysql&gt; select * from app_article_authors;
-+----+------------+-----------+
-| id | article_id | author_id |
-+----+------------+-----------+
-|  1 |          1 |         2 |
-|  3 |          1 |         4 |
-|  2 |          1 |         5 |
-|  5 |          2 |         1 |
-|  4 |          2 |         3 |
-|  6 |          2 |         5 |
-|  7 |          3 |         6 |
-+----+------------+-----------+
-</code></pre>
-
-<p>That&rsquo;s all! Hope someone finds it useful. Any feedback is welcome, so feel free to leave your comments. 😉</p>
-<div class="footnotes">
-
-<hr />
-
-<ol>
-<li id="fn:1"><p>implicitly, Django adds the following line</p>
-
-<pre><code class="language-python">id = models.AutoField(primary_key=True)
-</code></pre>
-
-<p>to the model class.</p>
- <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
-<li id="fn:2">see <a href="https://stackoverflow.com/questions/29657312/update-primary-key-django-mysql">https://stackoverflow.com/questions/29657312/update-primary-key-django-mysql</a>.
- <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
-
-<li id="fn:3"><p>see, for example:</p>
-
-<ul>
-<li><a href="https://stackoverflow.com/questions/2055784/what-is-the-best-approach-to-change-primary-keys-in-an-existing-django-app">https://stackoverflow.com/questions/2055784/what-is-the-best-approach-to-change-primary-keys-in-an-existing-django-app</a></li>
-<li><a href="https://stackoverflow.com/questions/41185561/how-to-migrate-from-custom-primary-key-to-default-id">https://stackoverflow.com/questions/41185561/how-to-migrate-from-custom-primary-key-to-default-id</a></li>
-</ul>
-
-<p>to convice yourself.</p>
- <a class="footnote-return" href="#fnref:3"><sup>[return]</sup></a></li>
-</ol>
-</div>
-
-
-                <br>
-            </div>
-            
-            
-            <br>
-            <div class="disqus">
-                <div id="disqus_thread"></div>
-<script>
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "salvalcantara-com" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-            </div>
-            
         </div>
     </div>
 </section>
-
 <section class="footer">
     <div class="container">
 
