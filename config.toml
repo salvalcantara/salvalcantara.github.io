@@ -1,6 +1,6 @@
 languageCode = "en-US"
 title = "Salva Alcántara"
-baseurl = "http://salvalcantara.com/"
+baseurl = "https://salvalcantara.com/"
 theme = "cocoa-eh"
 builddrafts = false
 canonifyurls = true
