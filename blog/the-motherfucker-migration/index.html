@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="Salva Alcántara" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://salvalcantara.com/blog/the-motherfucker-migration/" />
+<meta property="og:url" content="https://salvalcantara.com/blog/the-motherfucker-migration/" />
 <meta property="og:title" content="The motherfucker migration" />
 <meta property="twitter:title" content="The motherfucker migration">
 
-    <meta property="og:image" content="http://salvalcantara.com/img/banner.png">
+    <meta property="og:image" content="https://salvalcantara.com/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:image" content="http://salvalcantara.com/img/banner.png">
+    <meta property="twitter:image" content="https://salvalcantara.com/img/banner.png">
 
 <meta property="og:description" content="">
 <meta property="twitter:description" content="">
@@ -32,13 +32,13 @@
      Salva Alcántara - The motherfucker migration 
 
 </title>
-<link rel="canonical" href="http://salvalcantara.com/blog/the-motherfucker-migration/">
+<link rel="canonical" href="https://salvalcantara.com/blog/the-motherfucker-migration/">
 
 
 <style media="screen">
   @font-face {
   font-family: 'Nexa Bold';
-  src: url('http://salvalcantara.com/fonts/Nexa Bold.otf');
+  src: url('https://salvalcantara.com/fonts/Nexa Bold.otf');
 }
 
 html, body, div, span, applet, object, iframe,
@@ -929,7 +929,7 @@ margin-left: -4%;
 
 <link rel="shortcut icon"
 
-    href="http://salvalcantara.com/img/favicon.png"
+    href="https://salvalcantara.com/img/favicon.png"
 
 >
 
@@ -945,13 +945,13 @@ margin-left: -4%;
 <section class="header">
 
     <div class="container">
-        <a href="http://salvalcantara.com/"><img class="logo" src="http://salvalcantara.com/img/logo.png" alt="logo" /></a>
+        <a href="https://salvalcantara.com/"><img class="logo" src="https://salvalcantara.com/img/logo.png" alt="logo" /></a>
         <div class="content">
-            <a href="http://salvalcantara.com/"><div class="name"><h1>Salva Alcántara</h1></div></a>
+            <a href="https://salvalcantara.com/"><div class="name"><h1>Salva Alcántara</h1></div></a>
             <nav>
                 <ul>
                     
-                        <a href="http://salvalcantara.com/blog/"><li>Blog</li></a>
+                        <a href="https://salvalcantara.com/blog/"><li>Blog</li></a>
                     
                     
                         
@@ -960,7 +960,7 @@ margin-left: -4%;
                     
                     
                         
-                            <a href="http://salvalcantara.com/about/"><li>about</li></a>
+                            <a href="https://salvalcantara.com/about/"><li>about</li></a>
                         
                     
                 </ul>
@@ -992,16 +992,16 @@ margin-left: -4%;
                         <ul>
                           
                             <div class="middot"></div>
-                            <li><a href="http://salvalcantara.com/tags/development">development</a> </li>
+                            <li><a href="https://salvalcantara.com/tags/development">development</a> </li>
                           
                             <div class="middot"></div>
-                            <li><a href="http://salvalcantara.com/tags/django">django</a> </li>
+                            <li><a href="https://salvalcantara.com/tags/django">django</a> </li>
                           
                             <div class="middot"></div>
-                            <li><a href="http://salvalcantara.com/tags/migrations">migrations</a> </li>
+                            <li><a href="https://salvalcantara.com/tags/migrations">migrations</a> </li>
                           
                             <div class="middot"></div>
-                            <li><a href="http://salvalcantara.com/tags/python">python</a> </li>
+                            <li><a href="https://salvalcantara.com/tags/python">python</a> </li>
                           
                         </ul>
                     </div>
@@ -1016,40 +1016,25 @@ margin-left: -4%;
             <div class="markdown">
                 
     
-    <p>This (my very first) post covers what I&rsquo;ve come to refer as the <em>motherfucker</em> migration in Django. You can find the accompanying code, as well as detailed instructions on how to apply it, <a href="https://github.com/salvalcantara/django-change-pk">here</a>.</p>
-
-<p>For the sake of explanation, let&rsquo;s consider a Django app with the following two (oversimplified) related models:</p>
-
-<pre><code class="language-python">class Author(models.Model):
-    name = models.CharField(max_length=30, primary_key=True)
-</code></pre>
-
-<pre><code>class Article(models.Model):
+    <p>This (my very first) post covers what I've come to refer as the <em>motherfucker</em> migration in Django. You can find the accompanying code, as well as detailed instructions on how to apply it, <a href="https://github.com/salvalcantara/django-change-pk">here</a>.</p>
+<p>For the sake of explanation, let's consider a Django app with the following two (oversimplified) related models:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Author</span>(models<span style="color:#f92672">.</span>Model):
+    name <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>CharField(max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>, primary_key<span style="color:#f92672">=</span>True)
+</code></pre></div><pre><code>class Article(models.Model):
     title = models.CharField(max_length=140)
     authors = models.ManyToManyField(Author, related_name='articles')
-</code></pre>
-
-<p>In short, authors write articles, and an article can have one or more authors. Note the following crucial point: the Author model specifies <em>name</em> as a custom primary key (PK) field, instead of relying on Django for generating the default (autoincrement) PK as done in Article.<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup> So, since <em>name</em> acts as the PK for the authors table, one cannot change an author&rsquo;s name; intead, a new author would be created.<sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup> This is clearly undesirable and you might be wondering why someone would want to mess up the database in the first place. Well, the reasons behind such a pitfall are beyond the scope of this post, but suffice it to say that I have come accross this problem myself, and I am not apparently alone.<sup class="footnote-ref" id="fnref:3"><a rel="footnote" href="#fn:3">3</a></sup></p>
-
+</code></pre><p>In short, authors write articles, and an article can have one or more authors. Note the following crucial point: the Author model specifies <em>name</em> as a custom primary key (PK) field, instead of relying on Django for generating the default (autoincrement) PK as done in Article.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> So, since <em>name</em> acts as the PK for the authors table, one cannot change an author's name; intead, a new author would be created.<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> This is clearly undesirable and you might be wondering why someone would want to mess up the database in the first place. Well, the reasons behind such a pitfall are beyond the scope of this post, but suffice it to say that I have come accross this problem myself, and I am not apparently alone.<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
 <p>Now, what can we do about it? First thing would be to fix the Author class:</p>
-
-<pre><code class="language-python">class Author(models.Model):
-    name = models.CharField(max_length=30, unique=True)
-</code></pre>
-
-<p>By replacing <code>primary_key=True</code> with <code>unique=True</code> we are implicitly using the default autoincrement <code>id</code> field as the new PK.<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup> This minor change alone won&rsquo;t do the trick, however, as confirmed by the output of the <code>manage.py makemigrations</code> command:</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Author</span>(models<span style="color:#f92672">.</span>Model):
+    name <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>CharField(max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>, unique<span style="color:#f92672">=</span>True)
+</code></pre></div><p>By replacing <code>primary_key=True</code> with <code>unique=True</code> we are implicitly using the default autoincrement <code>id</code> field as the new PK.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> This minor change alone won't do the trick, however, as confirmed by the output of the <code>manage.py makemigrations</code> command:</p>
 <pre><code>You are trying to add a non-nullable field 'id' to author without a default; 
 we can't do that (the database needs something to populate existing rows).
 Please select a fix:
  1) Provide a one-off default now (will be set on all existing rows)
  2) Quit, and let me add a default in models.py 
-</code></pre>
-
-<p>To make things even worse, we also have the pivot table and the corresponding foreign key constraint. Addressing all these nuances requires us to write a custom (<em>motherfucker</em>) migration, since there is no way that Django can generate it for us automatically. Moreover, since it is necessary to execute some database-specific DDL statements to change the <em>schema</em>, in this post we will restrict ourselves to MySQL.</p>
-
+</code></pre><p>To make things even worse, we also have the pivot table and the corresponding foreign key constraint. Addressing all these nuances requires us to write a custom (<em>motherfucker</em>) migration, since there is no way that Django can generate it for us automatically. Moreover, since it is necessary to execute some database-specific DDL statements to change the <em>schema</em>, in this post we will restrict ourselves to MySQL.</p>
 <p>At this point, it might help to look at some sample data:</p>
-
 <pre><code>mysql&gt; select * from app_author;
 +---------------+
 | name          |
@@ -1061,9 +1046,7 @@ Please select a fix:
 | S. Alcántara  |
 | S. Skogestad  |
 +---------------+
-</code></pre>
-
-<pre><code>mysql&gt; select * from app_article;
+</code></pre><pre><code>mysql&gt; select * from app_article;
 +----+-------------------------------------------------------------------------------+
 | id | title                                                                         |
 +----+-------------------------------------------------------------------------------+
@@ -1071,9 +1054,7 @@ Please select a fix:
 |  2 | H-infinity control of fractional linear systems                               |
 |  3 | Simple analytic rules for model reduction and PID controller tuning           |
 +----+-------------------------------------------------------------------------------+
-</code></pre>
-
-<pre><code>mysql&gt; select * from app_article_authors;
+</code></pre><pre><code>mysql&gt; select * from app_article_authors;
 +----+------------+---------------+
 | id | article_id | author_id     |
 +----+------------+---------------+
@@ -1085,49 +1066,43 @@ Please select a fix:
 |  6 |          2 | S. Alcántara  |
 |  7 |          3 | S. Skogestad  |
 +----+------------+---------------+
-</code></pre>
-
-<p>Without further ado, here is how the migration looks like:</p>
-
-<pre><code class="language-python">app_name = 'app'
-model_name = 'author'
-related_model_name = 'article'
-model_table = '%s_%s' % (app_name, model_name)
-pivot_table = '%s_%s_%ss' % (app_name, related_model_name, model_name)
-fk_name, index_name = None, None 
+</code></pre><p>Without further ado, here is how the migration looks like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">app_name <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">app</span><span style="color:#e6db74">&#39;</span>
+model_name <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">author</span><span style="color:#e6db74">&#39;</span>
+related_model_name <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">article</span><span style="color:#e6db74">&#39;</span>
+model_table <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (app_name, model_name)
+pivot_table <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (app_name, related_model_name, model_name)
+fk_name, index_name <span style="color:#f92672">=</span> None, None 
 
 
-class Migration(migrations.Migration):
-    ...
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Migration</span>(migrations<span style="color:#f92672">.</span>Migration):
+    <span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>
 
-    operations = [
-        migrations.AddField(
-            model_name=model_name,
-            name='id',
-            field=models.IntegerField(null=True),
-            preserve_default=True,
+    operations <span style="color:#f92672">=</span> [
+        migrations<span style="color:#f92672">.</span>AddField(
+            model_name<span style="color:#f92672">=</span>model_name,
+            name<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">id</span><span style="color:#e6db74">&#39;</span>,
+            field<span style="color:#f92672">=</span>models<span style="color:#f92672">.</span>IntegerField(null<span style="color:#f92672">=</span>True),
+            preserve_default<span style="color:#f92672">=</span>True,
         ),
-        migrations.RunPython(do_most_of_the_surgery),
-        migrations.AlterField(
-            model_name=model_name,
-            name='id',
-            field=models.AutoField(
-                verbose_name='ID', serialize=False, auto_created=True,
-                primary_key=True),
-            preserve_default=True,
+        migrations<span style="color:#f92672">.</span>RunPython(do_most_of_the_surgery),
+        migrations<span style="color:#f92672">.</span>AlterField(
+            model_name<span style="color:#f92672">=</span>model_name,
+            name<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">id</span><span style="color:#e6db74">&#39;</span>,
+            field<span style="color:#f92672">=</span>models<span style="color:#f92672">.</span>AutoField(
+                verbose_name<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ID</span><span style="color:#e6db74">&#39;</span>, serialize<span style="color:#f92672">=</span>False, auto_created<span style="color:#f92672">=</span>True,
+                primary_key<span style="color:#f92672">=</span>True),
+            preserve_default<span style="color:#f92672">=</span>True,
         ),
-        migrations.AlterField(
-            model_name=model_name,
-            name='name',
-            field=models.CharField(max_length=30, unique=True),
-            preserve_default=True,
+        migrations<span style="color:#f92672">.</span>AlterField(
+            model_name<span style="color:#f92672">=</span>model_name,
+            name<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#39;</span>,
+            field<span style="color:#f92672">=</span>models<span style="color:#f92672">.</span>CharField(max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>, unique<span style="color:#f92672">=</span>True),
+            preserve_default<span style="color:#f92672">=</span>True,
         ),
-        migrations.RunPython(do_the_final_lifting),
+        migrations<span style="color:#f92672">.</span>RunPython(do_the_final_lifting),
     ]
-</code></pre>
-
-<p>In summary, the migration goes through the following operations:</p>
-
+</code></pre></div><p>In summary, the migration goes through the following operations:</p>
 <ul>
 <li>Declare the new <code>id</code> column in the authors table nullable</li>
 <li>Run the <code>do_most_of_the_surgery</code> function</li>
@@ -1135,130 +1110,114 @@ class Migration(migrations.Migration):
 <li>Alter the former PK field (<code>name</code>) accordingly</li>
 <li>Do some extra final work by calling <code>do_the_final_lifting</code></li>
 </ul>
-
 <p>Let us turn our attention to the <code>do_most_of_the_surgery</code> function now:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">do_most_of_the_surgery</span>(apps, schema_editor):
+    models <span style="color:#f92672">=</span> {}
+    Model <span style="color:#f92672">=</span> apps<span style="color:#f92672">.</span>get_model(app_name, model_name)
 
-<pre><code class="language-python">def do_most_of_the_surgery(apps, schema_editor):
-    models = {}
-    Model = apps.get_model(app_name, model_name)
+    <span style="color:#75715e"># Generate values for the new id column</span>
+    <span style="color:#66d9ef">for</span> i, o <span style="color:#f92672">in</span> enumerate(Model<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>all()):
+        o<span style="color:#f92672">.</span>id <span style="color:#f92672">=</span> i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+        o<span style="color:#f92672">.</span>save()
+        models[o<span style="color:#f92672">.</span>name] <span style="color:#f92672">=</span> o<span style="color:#f92672">.</span>id
 
-    # Generate values for the new id column
-    for i, o in enumerate(Model.objects.all()):
-        o.id = i + 1
-        o.save()
-        models[o.name] = o.id
-
-    # Work on the pivot table before going on
+    <span style="color:#75715e"># Work on the pivot table before going on</span>
     drop_constraints_and_indices_in_pivot_table()
 
-    # Drop current pk index and create the new one
-    cursor.execute(
-        &quot;ALTER TABLE %s DROP PRIMARY KEY&quot; % model_table
+    <span style="color:#75715e"># Drop current pk index and create the new one</span>
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> DROP PRIMARY KEY</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> model_table
     )
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD PRIMARY KEY (id)&quot; % model_table
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ADD PRIMARY KEY (id)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> model_table
     )
 
-    # Rename the fk column in the pivot table
-    cursor.execute(
-        &quot;ALTER TABLE %s &quot;
-        &quot;CHANGE %s_id %s_id_old %s NOT NULL&quot; %
-        (pivot_table, model_name, model_name, 'VARCHAR(30)'))
-    # ... and create a new one for the new id
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD COLUMN %s_id INT(11)&quot; %
+    <span style="color:#75715e"># Rename the fk column in the pivot table</span>
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#34;</span>
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">CHANGE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id_old </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> NOT NULL</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span>
+        (pivot_table, model_name, model_name, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">VARCHAR(30)</span><span style="color:#e6db74">&#39;</span>))
+    <span style="color:#75715e"># ... and create a new one for the new id</span>
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ADD COLUMN </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id INT(11)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span>
         (pivot_table, model_name))
 
-    # Fill in the new column in the pivot table
-    cursor.execute(&quot;SELECT id, %s_id_old FROM %s&quot; % (model_name, pivot_table))
-    for row in cursor:
-        id, key = row[0], row[1]
-        model_id = models[key]
+    <span style="color:#75715e"># Fill in the new column in the pivot table</span>
+    cursor<span style="color:#f92672">.</span>execute(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">SELECT id, </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id_old FROM </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (model_name, pivot_table))
+    <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> cursor:
+        id, key <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">0</span>], row[<span style="color:#ae81ff">1</span>]
+        model_id <span style="color:#f92672">=</span> models[key]
 
-        inner_cursor = connection.cursor()
-        inner_cursor.execute(
-            &quot;UPDATE %s SET %s_id=%d WHERE id=%d&quot; %
+        inner_cursor <span style="color:#f92672">=</span> connection<span style="color:#f92672">.</span>cursor()
+        inner_cursor<span style="color:#f92672">.</span>execute(
+            <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">UPDATE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> SET </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id=</span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> WHERE id=</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span>
             (pivot_table, model_name, model_id, id))
 
-    # Drop the old (renamed) column in pivot table, no longer needed
-    cursor.execute(
-        &quot;ALTER TABLE %s DROP COLUMN %s_id_old&quot; %
+    <span style="color:#75715e"># Drop the old (renamed) column in pivot table, no longer needed</span>
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> DROP COLUMN </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id_old</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span>
         (pivot_table, model_name))
-</code></pre>
+</code></pre></div><p>where</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">drop_constraints_and_indices_in_pivot_table</span>():
+    <span style="color:#66d9ef">global</span> fk_name, index_name
 
-<p>where</p>
+    fk_postfix <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%%</span><span style="color:#e6db74">_fk_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (app_name, model_name, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#39;</span>)
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">SELECT constraint_name FROM information_schema.table_constraints </span><span style="color:#e6db74">&#34;</span>
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">WHERE table_name=</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74"> AND constraint_name LIKE </span><span style="color:#e6db74">&#34;</span>
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (pivot_table, fk_postfix))
+    fk_name <span style="color:#f92672">=</span> cursor<span style="color:#f92672">.</span>fetchone()[<span style="color:#ae81ff">0</span>]
 
-<pre><code class="language-python">def drop_constraints_and_indices_in_pivot_table():
-    global fk_name, index_name
-
-    fk_postfix = '%%_fk_%s_%s_%s' % (app_name, model_name, 'name')
-    cursor.execute(
-        &quot;SELECT constraint_name FROM information_schema.table_constraints &quot;
-        &quot;WHERE table_name='%s' AND constraint_name LIKE &quot;
-        &quot;'%s'&quot; % (pivot_table, fk_postfix))
-    fk_name = cursor.fetchone()[0]
-
-    cursor.execute(
-        &quot;SELECT index_name FROM information_schema.statistics &quot;
-        &quot;WHERE table_name='%s' AND index_name LIKE &quot;
-        &quot;'%s_%%' AND column_name='%s_id'&quot; %
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">SELECT index_name FROM information_schema.statistics </span><span style="color:#e6db74">&#34;</span>
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">WHERE table_name=</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74"> AND index_name LIKE </span><span style="color:#e6db74">&#34;</span>
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%%</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74"> AND column_name=</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span>
         (pivot_table, pivot_table, model_name))
-    index_name = cursor.fetchone()[0]
+    index_name <span style="color:#f92672">=</span> cursor<span style="color:#f92672">.</span>fetchone()[<span style="color:#ae81ff">0</span>]
 
-    cursor.execute(
-        &quot;ALTER TABLE %s DROP FOREIGN KEY %s&quot; % (pivot_table, fk_name))
-    cursor.execute(
-        &quot;ALTER TABLE %s DROP INDEX %s&quot; % (pivot_table, index_name))
-    cursor.execute(
-        &quot;ALTER TABLE %s DROP INDEX %s_id&quot; % (pivot_table, related_model_name))
-</code></pre>
-
-<p>As you can see, there is nothing fancy here, just a lot of unpleasant work to fix a major pitfall.
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> DROP FOREIGN KEY </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (pivot_table, fk_name))
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> DROP INDEX </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (pivot_table, index_name))
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> DROP INDEX </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (pivot_table, related_model_name))
+</code></pre></div><p>As you can see, there is nothing fancy here, just a lot of unpleasant work to fix a major pitfall.
 For completeness, here is the code for <code>do_the_final_lifting</code> too:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">do_the_final_lifting</span>(apps, schema_editor):
+    <span style="color:#75715e"># Create a new unique index for the old pk column</span>
+    index_prefix <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> model_table
+    new_index_prefix <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_name</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> model_table
+    new_index_name <span style="color:#f92672">=</span> index_name<span style="color:#f92672">.</span>replace(index_prefix, new_index_prefix)
 
-<pre><code class="language-python">def do_the_final_lifting(apps, schema_editor):
-    # Create a new unique index for the old pk column
-    index_prefix = '%s_id' % model_table
-    new_index_prefix = '%s_name' % model_table
-    new_index_name = index_name.replace(index_prefix, new_index_prefix)
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ADD UNIQUE KEY </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> (</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span>
+        (model_table, new_index_name, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#39;</span>))
 
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD UNIQUE KEY %s (%s)&quot; %
-        (model_table, new_index_name, 'name'))
-
-    # Finally, work on the pivot table
+    <span style="color:#75715e"># Finally, work on the pivot table</span>
     recreate_constraints_and_indices_in_pivot_table()
-</code></pre>
-
-<p>where</p>
-
-<pre><code class="language-python">def recreate_constraints_and_indices_in_pivot_table():
-    cursor.execute(
-        &quot;ALTER TABLE %s MODIFY %s_id INT(11) NOT NULL&quot; %
+</code></pre></div><p>where</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">recreate_constraints_and_indices_in_pivot_table</span>():
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> MODIFY </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id INT(11) NOT NULL</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span>
         (pivot_table, model_name))
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD INDEX %s (%s_id)&quot; %
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ADD INDEX </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> (</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span>
         (pivot_table, index_name, model_name))
 
-    fk_postfix = '_fk_%s_%s_%s' % (app_name, model_name, 'name')
-    new_fk_postfix = '_fk_%s_%s_%s' % (app_name, model_name, 'id')
-    new_fk_name = fk_name.replace(fk_postfix, new_fk_postfix)
+    fk_postfix <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">_fk_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (app_name, model_name, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#39;</span>)
+    new_fk_postfix <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">_fk_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (app_name, model_name, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">id</span><span style="color:#e6db74">&#39;</span>)
+    new_fk_name <span style="color:#f92672">=</span> fk_name<span style="color:#f92672">.</span>replace(fk_postfix, new_fk_postfix)
 
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD CONSTRAINT &quot;
-        &quot;%s FOREIGN KEY (%s_id) REFERENCES %s (id)&quot; %
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ADD CONSTRAINT </span><span style="color:#e6db74">&#34;</span>
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> FOREIGN KEY (</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id) REFERENCES </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> (id)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span>
         (pivot_table, new_fk_name, model_name, model_table))
-    cursor.execute(
-        &quot;ALTER TABLE %s ADD UNIQUE KEY %s_id (%s_id, %s_id)&quot; %
+    cursor<span style="color:#f92672">.</span>execute(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ALTER TABLE </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ADD UNIQUE KEY </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id (</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id, </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_id)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span>
         (pivot_table, related_model_name, related_model_name, model_name))
-</code></pre>
-
-<p>With the above migration in place, we are all set to go:</p>
-
+</code></pre></div><p>With the above migration in place, we are all set to go:</p>
 <pre><code>./manage.py migrate app
-</code></pre>
-
-<pre><code>mysql&gt; select * from app_author;
+</code></pre><pre><code>mysql&gt; select * from app_author;
 +---------------+----+
 | name          | id |
 +---------------+----+
@@ -1269,9 +1228,7 @@ For completeness, here is the code for <code>do_the_final_lifting</code> too:</p
 | S. Alcántara  |  5 |
 | S. Skogestad  |  6 |
 +---------------+----+
-</code></pre>
-
-<pre><code>mysql&gt; select * from app_article_authors;
+</code></pre><pre><code>mysql&gt; select * from app_article_authors;
 +----+------------+-----------+
 | id | article_id | author_id |
 +----+------------+-----------+
@@ -1283,35 +1240,28 @@ For completeness, here is the code for <code>do_the_final_lifting</code> too:</p
 |  6 |          2 |         5 |
 |  7 |          3 |         6 |
 +----+------------+-----------+
-</code></pre>
-
-<p>That&rsquo;s all! Hope someone finds it useful. Any feedback is welcome, so feel free to leave your comments. 😉</p>
-<div class="footnotes">
-
-<hr />
-
+</code></pre><p>That's all! Hope someone finds it useful. Any feedback is welcome, so feel free to leave your comments. 😉</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
 <ol>
-<li id="fn:1"><p>implicitly, Django adds the following line</p>
-
-<pre><code class="language-python">id = models.AutoField(primary_key=True)
-</code></pre>
-
-<p>to the model class.</p>
- <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
-<li id="fn:2">see <a href="https://stackoverflow.com/questions/29657312/update-primary-key-django-mysql">https://stackoverflow.com/questions/29657312/update-primary-key-django-mysql</a>.
- <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
-
-<li id="fn:3"><p>see, for example:</p>
-
+<li id="fn:1" role="doc-endnote">
+<p>implicitly, Django adds the following line</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">id <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>AutoField(primary_key<span style="color:#f92672">=</span>True)
+</code></pre></div><p>to the model class. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>see <a href="https://stackoverflow.com/questions/29657312/update-primary-key-django-mysql">https://stackoverflow.com/questions/29657312/update-primary-key-django-mysql</a>. <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>see, for example:</p>
 <ul>
 <li><a href="https://stackoverflow.com/questions/2055784/what-is-the-best-approach-to-change-primary-keys-in-an-existing-django-app">https://stackoverflow.com/questions/2055784/what-is-the-best-approach-to-change-primary-keys-in-an-existing-django-app</a></li>
 <li><a href="https://stackoverflow.com/questions/41185561/how-to-migrate-from-custom-primary-key-to-default-id">https://stackoverflow.com/questions/41185561/how-to-migrate-from-custom-primary-key-to-default-id</a></li>
 </ul>
-
-<p>to convice yourself.</p>
- <a class="footnote-return" href="#fnref:3"><sup>[return]</sup></a></li>
+<p>to convice yourself. <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
 </ol>
-</div>
+</section>
 
 
                 <br>
@@ -1321,7 +1271,7 @@ For completeness, here is the code for <code>do_the_final_lifting</code> too:</p
             <br>
             <div class="disqus">
                 <div id="disqus_thread"></div>
-<script>
+<script type="application/javascript">
     var disqus_config = function () {
     
     
@@ -1355,7 +1305,7 @@ For completeness, here is the code for <code>do_the_final_lifting</code> too:</p
 
         
             
-                <a href="http://salvalcantara.com/license">Copyright © 2017 Salva Alcántara</a>
+                <a href="https://salvalcantara.com/license">Copyright © 2017 Salva Alcántara</a>
             
         
 
@@ -1366,31 +1316,31 @@ For completeness, here is the code for <code>do_the_final_lifting</code> too:</p
 
         
             <a href="https://github.com/salvalcantara" target="_blank">
-                <img class="icon" src="http://salvalcantara.com/img/github.svg" alt="github" />
+                <img class="icon" src="https://salvalcantara.com/img/github.svg" alt="github" />
             </a>
         
 
         
             <a href="https://twitter.com/salvalcantara" target="_blank">
-                <img class="icon" src="http://salvalcantara.com/img/twitter.svg" alt="twitter" />
+                <img class="icon" src="https://salvalcantara.com/img/twitter.svg" alt="twitter" />
             </a>
         
 
         
             <a href="https://www.linkedin.com/in/salvalcantara" target="_blank">
-                <img class="icon" src="http://salvalcantara.com/img/linkedin.svg" alt="linkedin" />
+                <img class="icon" src="https://salvalcantara.com/img/linkedin.svg" alt="linkedin" />
             </a>
         
 
         
             <a href="mailto:salva@salvalcantara.com">
-                <img class="icon" src="http://salvalcantara.com/img/email.svg" alt="email" />
+                <img class="icon" src="https://salvalcantara.com/img/email.svg" alt="email" />
             </a>
         
 
         
-            <a href="http://salvalcantara.com/index.xml">
-                <img class="icon" src="http://salvalcantara.com/img/rss.svg" alt="rss" />
+            <a href="https://salvalcantara.com/index.xml">
+                <img class="icon" src="https://salvalcantara.com/img/rss.svg" alt="rss" />
             </a>
         
 
@@ -1408,12 +1358,12 @@ For completeness, here is the code for <code>do_the_final_lifting</code> too:</p
 </script>
 
 
-  <script src="http://salvalcantara.com/js/highlight.min.js" defer></script>
+  <script src="https://salvalcantara.com/js/highlight.min.js" defer></script>
   
 
 
 
-  <script src="http://salvalcantara.com/js/progressively.min.js" defer></script>
+  <script src="https://salvalcantara.com/js/progressively.min.js" defer></script>
 
 
 
@@ -1422,12 +1372,16 @@ For completeness, here is the code for <code>do_the_final_lifting</code> too:</p
 
 
 
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-106158048-1', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-106158048-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 <script>

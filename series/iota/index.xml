@@ -1,24 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Iota on Salva Alcántara</title>
-    <link>http://salvalcantara.com/series/iota/</link>
-    <description>Recent content in Iota on Salva Alcántara</description>
+    <title>iota on Salva Alcántara</title>
+    <link>https://salvalcantara.com/series/iota/</link>
+    <description>Recent content in iota on Salva Alcántara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <copyright>Copyright © 2017 Salva Alcántara</copyright>
     <lastBuildDate>Sun, 14 Jan 2018 17:32:32 +0100</lastBuildDate>
     
-	<atom:link href="http://salvalcantara.com/series/iota/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://salvalcantara.com/series/iota/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>The IOTA song</title>
-      <link>http://salvalcantara.com/blog/the-iota-song/</link>
+      <link>https://salvalcantara.com/blog/the-iota-song/</link>
       <pubDate>Sun, 14 Jan 2018 17:32:32 +0100</pubDate>
       
-      <guid>http://salvalcantara.com/blog/the-iota-song/</guid>
-      <description>Among the different cryptocurrencies out there, I feel very excited about what IOTA can bring to the table. Perhaps in the future I can find the time to write about it from a technical perspective and make a real contribution to its community. Today&amp;rsquo;s post is just to have some fun while the sleeping giant takes the world by storm.
+      <guid>https://salvalcantara.com/blog/the-iota-song/</guid>
+      <description>Among the different cryptocurrencies out there, I feel very excited about what IOTA can bring to the table. Perhaps in the future I can find the time to write about it from a technical perspective and make a real contribution to its community. Today&#39;s post is just to have some fun while the sleeping giant takes the world by storm.
 The genesis. One day my brother played a song from basshunter on his phone.</description>
     </item>
     

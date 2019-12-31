@@ -1,26 +1,25 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Django on Salva Alcántara</title>
-    <link>http://salvalcantara.com/tags/django/</link>
-    <description>Recent content in Django on Salva Alcántara</description>
+    <title>django on Salva Alcántara</title>
+    <link>https://salvalcantara.com/tags/django/</link>
+    <description>Recent content in django on Salva Alcántara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <copyright>Copyright © 2017 Salva Alcántara</copyright>
     <lastBuildDate>Thu, 24 Aug 2017 19:49:30 +0200</lastBuildDate>
     
-	<atom:link href="http://salvalcantara.com/tags/django/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://salvalcantara.com/tags/django/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>The motherfucker migration</title>
-      <link>http://salvalcantara.com/blog/the-motherfucker-migration/</link>
+      <link>https://salvalcantara.com/blog/the-motherfucker-migration/</link>
       <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
       
-      <guid>http://salvalcantara.com/blog/the-motherfucker-migration/</guid>
-      <description>This (my very first) post covers what I&amp;rsquo;ve come to refer as the motherfucker migration in Django. You can find the accompanying code, as well as detailed instructions on how to apply it, here.
-For the sake of explanation, let&amp;rsquo;s consider a Django app with the following two (oversimplified) related models:
-class Author(models.Model): name = models.CharField(max_length=30, primary_key=True)  class Article(models.Model): title = models.CharField(max_length=140) authors = models.ManyToManyField(Author, related_name=&#39;articles&#39;)  In short, authors write articles, and an article can have one or more authors.</description>
+      <guid>https://salvalcantara.com/blog/the-motherfucker-migration/</guid>
+      <description>This (my very first) post covers what I&#39;ve come to refer as the motherfucker migration in Django. You can find the accompanying code, as well as detailed instructions on how to apply it, here.
+For the sake of explanation, let&#39;s consider a Django app with the following two (oversimplified) related models:
+class Author(models.Model): name = models.CharField(max_length=30, primary_key=True) class Article(models.Model): title = models.CharField(max_length=140) authors = models.ManyToManyField(Author, related_name=&#39;articles&#39;) In short, authors write articles, and an article can have one or more authors.</description>
     </item>
     
   </channel>

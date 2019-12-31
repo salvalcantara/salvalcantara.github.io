@@ -1,86 +1,85 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Salva Alcántara</title>
-    <link>http://salvalcantara.com/tags/</link>
+    <link>https://salvalcantara.com/tags/</link>
     <description>Recent content in Tags on Salva Alcántara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <copyright>Copyright © 2017 Salva Alcántara</copyright>
     <lastBuildDate>Sun, 14 Jan 2018 17:32:32 +0100</lastBuildDate>
     
-	<atom:link href="http://salvalcantara.com/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://salvalcantara.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Basshunter</title>
-      <link>http://salvalcantara.com/tags/basshunter/</link>
+      <title>basshunter</title>
+      <link>https://salvalcantara.com/tags/basshunter/</link>
       <pubDate>Sun, 14 Jan 2018 17:32:32 +0100</pubDate>
       
-      <guid>http://salvalcantara.com/tags/basshunter/</guid>
+      <guid>https://salvalcantara.com/tags/basshunter/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Development</title>
-      <link>http://salvalcantara.com/tags/development/</link>
-      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
-      
-      <guid>http://salvalcantara.com/tags/development/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Django</title>
-      <link>http://salvalcantara.com/tags/django/</link>
-      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
-      
-      <guid>http://salvalcantara.com/tags/django/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Dota</title>
-      <link>http://salvalcantara.com/tags/dota/</link>
+      <title>dota</title>
+      <link>https://salvalcantara.com/tags/dota/</link>
       <pubDate>Sun, 14 Jan 2018 17:32:32 +0100</pubDate>
       
-      <guid>http://salvalcantara.com/tags/dota/</guid>
+      <guid>https://salvalcantara.com/tags/dota/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Iota</title>
-      <link>http://salvalcantara.com/tags/iota/</link>
+      <title>iota</title>
+      <link>https://salvalcantara.com/tags/iota/</link>
       <pubDate>Sun, 14 Jan 2018 17:32:32 +0100</pubDate>
       
-      <guid>http://salvalcantara.com/tags/iota/</guid>
+      <guid>https://salvalcantara.com/tags/iota/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Migrations</title>
-      <link>http://salvalcantara.com/tags/migrations/</link>
-      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
-      
-      <guid>http://salvalcantara.com/tags/migrations/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Python</title>
-      <link>http://salvalcantara.com/tags/python/</link>
-      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
-      
-      <guid>http://salvalcantara.com/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Remake</title>
-      <link>http://salvalcantara.com/tags/remake/</link>
+      <title>remake</title>
+      <link>https://salvalcantara.com/tags/remake/</link>
       <pubDate>Sun, 14 Jan 2018 17:32:32 +0100</pubDate>
       
-      <guid>http://salvalcantara.com/tags/remake/</guid>
+      <guid>https://salvalcantara.com/tags/remake/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>development</title>
+      <link>https://salvalcantara.com/tags/development/</link>
+      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
+      
+      <guid>https://salvalcantara.com/tags/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>django</title>
+      <link>https://salvalcantara.com/tags/django/</link>
+      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
+      
+      <guid>https://salvalcantara.com/tags/django/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>migrations</title>
+      <link>https://salvalcantara.com/tags/migrations/</link>
+      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
+      
+      <guid>https://salvalcantara.com/tags/migrations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://salvalcantara.com/tags/python/</link>
+      <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
+      
+      <guid>https://salvalcantara.com/tags/python/</guid>
       <description></description>
     </item>
     

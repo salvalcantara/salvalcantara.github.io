@@ -1,31 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Salva Alcántara</title>
-    <link>http://salvalcantara.com/categories/</link>
+    <link>https://salvalcantara.com/categories/</link>
     <description>Recent content in Categories on Salva Alcántara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <copyright>Copyright © 2017 Salva Alcántara</copyright>
+    <lastBuildDate>Sun, 14 Jan 2018 17:32:32 +0100</lastBuildDate>
     
-	<atom:link href="http://salvalcantara.com/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://salvalcantara.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Cryptocurrencies</title>
-      <link>http://salvalcantara.com/categories/cryptocurrencies/</link>
+      <title>cryptocurrencies</title>
+      <link>https://salvalcantara.com/categories/cryptocurrencies/</link>
       <pubDate>Sun, 14 Jan 2018 17:32:32 +0100</pubDate>
       
-      <guid>http://salvalcantara.com/categories/cryptocurrencies/</guid>
+      <guid>https://salvalcantara.com/categories/cryptocurrencies/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Development</title>
-      <link>http://salvalcantara.com/categories/development/</link>
+      <title>development</title>
+      <link>https://salvalcantara.com/categories/development/</link>
       <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
       
-      <guid>http://salvalcantara.com/categories/development/</guid>
+      <guid>https://salvalcantara.com/categories/development/</guid>
       <description></description>
     </item>
     

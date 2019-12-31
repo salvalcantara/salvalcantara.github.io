@@ -1,46 +1,45 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Salva Alcántara</title>
-    <link>http://salvalcantara.com/</link>
+    <link>https://salvalcantara.com/</link>
     <description>Recent content on Salva Alcántara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <copyright>Copyright © 2017 Salva Alcántara</copyright>
     <lastBuildDate>Sun, 14 Jan 2018 17:32:32 +0100</lastBuildDate>
     
-	<atom:link href="http://salvalcantara.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://salvalcantara.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>The IOTA song</title>
-      <link>http://salvalcantara.com/blog/the-iota-song/</link>
+      <link>https://salvalcantara.com/blog/the-iota-song/</link>
       <pubDate>Sun, 14 Jan 2018 17:32:32 +0100</pubDate>
       
-      <guid>http://salvalcantara.com/blog/the-iota-song/</guid>
-      <description>Among the different cryptocurrencies out there, I feel very excited about what IOTA can bring to the table. Perhaps in the future I can find the time to write about it from a technical perspective and make a real contribution to its community. Today&amp;rsquo;s post is just to have some fun while the sleeping giant takes the world by storm.
+      <guid>https://salvalcantara.com/blog/the-iota-song/</guid>
+      <description>Among the different cryptocurrencies out there, I feel very excited about what IOTA can bring to the table. Perhaps in the future I can find the time to write about it from a technical perspective and make a real contribution to its community. Today&#39;s post is just to have some fun while the sleeping giant takes the world by storm.
 The genesis. One day my brother played a song from basshunter on his phone.</description>
     </item>
     
     <item>
       <title>about</title>
-      <link>http://salvalcantara.com/about/</link>
+      <link>https://salvalcantara.com/about/</link>
       <pubDate>Thu, 24 Aug 2017 19:53:00 +0200</pubDate>
       
-      <guid>http://salvalcantara.com/about/</guid>
+      <guid>https://salvalcantara.com/about/</guid>
       <description>Hi! My name is Salva Alcántara. I currently live in Rubí (Barcelona), Spain, with my beautiful wife and son. I studied Computer Science (Engineering) at the Universitat Autònoma de Barcelona. At the same university, I pursued a PhD on Industrial Informatics &amp;amp; Automatic Control.
 During my thesis years, I made two research stays: one at the Shanghai Jiao Tong University, supervised by Prof. Weidong Zhang, and the other one at the Norwegian University of Science and Technology, supervised by prof.</description>
     </item>
     
     <item>
       <title>The motherfucker migration</title>
-      <link>http://salvalcantara.com/blog/the-motherfucker-migration/</link>
+      <link>https://salvalcantara.com/blog/the-motherfucker-migration/</link>
       <pubDate>Thu, 24 Aug 2017 19:49:30 +0200</pubDate>
       
-      <guid>http://salvalcantara.com/blog/the-motherfucker-migration/</guid>
-      <description>This (my very first) post covers what I&amp;rsquo;ve come to refer as the motherfucker migration in Django. You can find the accompanying code, as well as detailed instructions on how to apply it, here.
-For the sake of explanation, let&amp;rsquo;s consider a Django app with the following two (oversimplified) related models:
-class Author(models.Model): name = models.CharField(max_length=30, primary_key=True)  class Article(models.Model): title = models.CharField(max_length=140) authors = models.ManyToManyField(Author, related_name=&#39;articles&#39;)  In short, authors write articles, and an article can have one or more authors.</description>
+      <guid>https://salvalcantara.com/blog/the-motherfucker-migration/</guid>
+      <description>This (my very first) post covers what I&#39;ve come to refer as the motherfucker migration in Django. You can find the accompanying code, as well as detailed instructions on how to apply it, here.
+For the sake of explanation, let&#39;s consider a Django app with the following two (oversimplified) related models:
+class Author(models.Model): name = models.CharField(max_length=30, primary_key=True) class Article(models.Model): title = models.CharField(max_length=140) authors = models.ManyToManyField(Author, related_name=&#39;articles&#39;) In short, authors write articles, and an article can have one or more authors.</description>
     </item>
     
   </channel>
