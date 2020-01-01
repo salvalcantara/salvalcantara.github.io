@@ -12,7 +12,8 @@ disqusshortname = "salvalcantara-com"
 googleAnalytics = "UA-106158048-1"
 pluralizelisttitles = false
 enableEmoji = true
-pygmentscodefences = false
+pygmentsCodefences = true
+pygmentsStyle = "pygments"
 
 [taxonomies]
 tag = "tags"
@@ -29,7 +30,7 @@ description = "Salva Alcántara's blog"
 copyright = "Copyright © 2020 Salva Alcántara"
 logofile = "img/logo.png"
 faviconfile = "img/favicon.png"
-highlightjs = true
+highlightjs = false
 progressively = true
 latestpostcount = 5
 github = "salvalcantara"
@@ -37,4 +38,3 @@ email = "salva@salvalcantara.com"
 linkedin = "salvalcantara"
 twitter = "salvalcantara"
 social_banner = "img/banner.png"
-
