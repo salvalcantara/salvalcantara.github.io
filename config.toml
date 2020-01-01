@@ -12,6 +12,7 @@ disqusshortname = "salvalcantara-com"
 googleAnalytics = "UA-106158048-1"
 pluralizelisttitles = false
 enableEmoji = true
+pygmentscodefences = false
 
 [taxonomies]
 tag = "tags"
