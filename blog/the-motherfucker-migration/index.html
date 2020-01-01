@@ -958,12 +958,15 @@ margin-left: -4%;
 </noscript>
 
 
+  <link type="text/css" rel="stylesheet" href="https://salvalcantara.com/css/syntax.css">
+
 
 
   <style type="text/css" media="screen">
     .progressive{overflow:hidden;position:relative;background:#efefef}.progressive__img{width:100%;height:100%;transform:translateZ(0)}.progressive--not-loaded{filter:blur(30px)}.progressive--is-loaded{filter:blur(20px);animation:a .5s both}@keyframes a{0%{filter:blur(20px)}to{filter:blur(0)}}
 
   </style>
+
 
 
 
@@ -1071,15 +1074,15 @@ margin-left: -4%;
     
     <p>This (my very first) post covers what I've come to refer as the <em>motherfucker</em> migration in Django. You can find the accompanying code, as well as detailed instructions on how to apply it, <a href="https://github.com/salvalcantara/django-change-pk">here</a>.</p>
 <p>For the sake of explanation, let's consider a Django app with the following two (oversimplified) related models:</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">Author</span>(models<span style="color:#666">.</span>Model):
-    name <span style="color:#666">=</span> models<span style="color:#666">.</span>CharField(max_length<span style="color:#666">=</span><span style="color:#666">30</span>, primary_key<span style="color:#666">=</span>True)
-</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">Article</span>(models<span style="color:#666">.</span>Model):
-    title <span style="color:#666">=</span> models<span style="color:#666">.</span>CharField(max_length<span style="color:#666">=</span><span style="color:#666">140</span>)
-    authors <span style="color:#666">=</span> models<span style="color:#666">.</span>ManyToManyField(Author, related_name<span style="color:#666">=</span><span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">articles</span><span style="color:#ba2121">&#39;</span>)
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Author</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">)</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">)</span><span class="p">:</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">140</span><span class="p">)</span>
+    <span class="n">authors</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Author</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">articles</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div><p>In short, authors write articles, and an article can have one or more authors. Note the following crucial point: the Author model specifies <em>name</em> as a custom primary key (PK) field, instead of relying on Django for generating the default (autoincrement) PK as done in Article.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> So, since <em>name</em> acts as the PK for the authors table, one cannot change an author's name; intead, a new author would be created.<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> This is clearly undesirable and you might be wondering why someone would want to mess up the database in the first place. Well, the reasons behind such a pitfall are beyond the scope of this post, but suffice it to say that I have come accross this problem myself, and I am not apparently alone.<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
 <p>Now, what can we do about it? First thing would be to fix the Author class:</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">Author</span>(models<span style="color:#666">.</span>Model):
-    name <span style="color:#666">=</span> models<span style="color:#666">.</span>CharField(max_length<span style="color:#666">=</span><span style="color:#666">30</span>, unique<span style="color:#666">=</span>True)
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Author</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">)</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </code></pre></div><p>By replacing <code>primary_key=True</code> with <code>unique=True</code> we are implicitly using the default autoincrement <code>id</code> field as the new PK.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> This minor change alone won't do the trick, however, as confirmed by the output of the <code>manage.py makemigrations</code> command:</p>
 <pre><code>You are trying to add a non-nullable field 'id' to author without a default; 
 we can't do that (the database needs something to populate existing rows).
@@ -1120,41 +1123,41 @@ Please select a fix:
 |  7 |          3 | S. Skogestad  |
 +----+------------+---------------+
 </code></pre><p>Without further ado, here is how the migration looks like:</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">app_name <span style="color:#666">=</span> <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">app</span><span style="color:#ba2121">&#39;</span>
-model_name <span style="color:#666">=</span> <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">author</span><span style="color:#ba2121">&#39;</span>
-related_model_name <span style="color:#666">=</span> <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">article</span><span style="color:#ba2121">&#39;</span>
-model_table <span style="color:#666">=</span> <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">&#39;</span> <span style="color:#666">%</span> (app_name, model_name)
-pivot_table <span style="color:#666">=</span> <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">s</span><span style="color:#ba2121">&#39;</span> <span style="color:#666">%</span> (app_name, related_model_name, model_name)
-fk_name, index_name <span style="color:#666">=</span> None, None 
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">app_name</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">app</span><span class="s1">&#39;</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">author</span><span class="s1">&#39;</span>
+<span class="n">related_model_name</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">article</span><span class="s1">&#39;</span>
+<span class="n">model_table</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">app_name</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
+<span class="n">pivot_table</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">app_name</span><span class="p">,</span> <span class="n">related_model_name</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
+<span class="n">fk_name</span><span class="p">,</span> <span class="n">index_name</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span> 
 
 
-<span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">Migration</span>(migrations<span style="color:#666">.</span>Migration):
-    <span style="color:#666">.</span><span style="color:#666">.</span><span style="color:#666">.</span>
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">)</span><span class="p">:</span>
+    <span class="o">.</span><span class="o">.</span><span class="o">.</span>
 
-    operations <span style="color:#666">=</span> [
-        migrations<span style="color:#666">.</span>AddField(
-            model_name<span style="color:#666">=</span>model_name,
-            name<span style="color:#666">=</span><span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">id</span><span style="color:#ba2121">&#39;</span>,
-            field<span style="color:#666">=</span>models<span style="color:#666">.</span>IntegerField(null<span style="color:#666">=</span>True),
-            preserve_default<span style="color:#666">=</span>True,
-        ),
-        migrations<span style="color:#666">.</span>RunPython(do_most_of_the_surgery),
-        migrations<span style="color:#666">.</span>AlterField(
-            model_name<span style="color:#666">=</span>model_name,
-            name<span style="color:#666">=</span><span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">id</span><span style="color:#ba2121">&#39;</span>,
-            field<span style="color:#666">=</span>models<span style="color:#666">.</span>AutoField(
-                verbose_name<span style="color:#666">=</span><span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">ID</span><span style="color:#ba2121">&#39;</span>, serialize<span style="color:#666">=</span>False, auto_created<span style="color:#666">=</span>True,
-                primary_key<span style="color:#666">=</span>True),
-            preserve_default<span style="color:#666">=</span>True,
-        ),
-        migrations<span style="color:#666">.</span>AlterField(
-            model_name<span style="color:#666">=</span>model_name,
-            name<span style="color:#666">=</span><span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">name</span><span style="color:#ba2121">&#39;</span>,
-            field<span style="color:#666">=</span>models<span style="color:#666">.</span>CharField(max_length<span style="color:#666">=</span><span style="color:#666">30</span>, unique<span style="color:#666">=</span>True),
-            preserve_default<span style="color:#666">=</span>True,
-        ),
-        migrations<span style="color:#666">.</span>RunPython(do_the_final_lifting),
-    ]
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">AddField</span><span class="p">(</span>
+            <span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">id</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">field</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="p">,</span>
+            <span class="n">preserve_default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="p">)</span><span class="p">,</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">RunPython</span><span class="p">(</span><span class="n">do_most_of_the_surgery</span><span class="p">)</span><span class="p">,</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">AlterField</span><span class="p">(</span>
+            <span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">id</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">field</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span>
+                <span class="n">verbose_name</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">ID</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">serialize</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">auto_created</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="p">,</span>
+            <span class="n">preserve_default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="p">)</span><span class="p">,</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">AlterField</span><span class="p">(</span>
+            <span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">name</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">field</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="p">,</span>
+            <span class="n">preserve_default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="p">)</span><span class="p">,</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">RunPython</span><span class="p">(</span><span class="n">do_the_final_lifting</span><span class="p">)</span><span class="p">,</span>
+    <span class="p">]</span>
 </code></pre></div><p>In summary, the migration goes through the following operations:</p>
 <ul>
 <li>Declare the new <code>id</code> column in the authors table nullable</li>
@@ -1164,110 +1167,110 @@ fk_name, index_name <span style="color:#666">=</span> None, None
 <li>Do some extra final work by calling <code>do_the_final_lifting</code></li>
 </ul>
 <p>Let us turn our attention to the <code>do_most_of_the_surgery</code> function now:</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">do_most_of_the_surgery</span>(apps, schema_editor):
-    models <span style="color:#666">=</span> {}
-    Model <span style="color:#666">=</span> apps<span style="color:#666">.</span>get_model(app_name, model_name)
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">do_most_of_the_surgery</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">)</span><span class="p">:</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">{</span><span class="p">}</span>
+    <span class="n">Model</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">app_name</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
 
-    <span style="color:#408080;font-style:italic"># Generate values for the new id column</span>
-    <span style="color:#008000;font-weight:bold">for</span> i, o <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#008000">enumerate</span>(Model<span style="color:#666">.</span>objects<span style="color:#666">.</span>all()):
-        o<span style="color:#666">.</span>id <span style="color:#666">=</span> i <span style="color:#666">+</span> <span style="color:#666">1</span>
-        o<span style="color:#666">.</span>save()
-        models[o<span style="color:#666">.</span>name] <span style="color:#666">=</span> o<span style="color:#666">.</span>id
+    <span class="c1"># Generate values for the new id column</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Model</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="p">)</span><span class="p">)</span><span class="p">:</span>
+        <span class="n">o</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">o</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="p">)</span>
+        <span class="n">models</span><span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">id</span>
 
-    <span style="color:#408080;font-style:italic"># Work on the pivot table before going on</span>
-    drop_constraints_and_indices_in_pivot_table()
+    <span class="c1"># Work on the pivot table before going on</span>
+    <span class="n">drop_constraints_and_indices_in_pivot_table</span><span class="p">(</span><span class="p">)</span>
 
-    <span style="color:#408080;font-style:italic"># Drop current pk index and create the new one</span>
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> DROP PRIMARY KEY</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span> model_table
-    )
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> ADD PRIMARY KEY (id)</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span> model_table
-    )
+    <span class="c1"># Drop current pk index and create the new one</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> DROP PRIMARY KEY</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">model_table</span>
+    <span class="p">)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> ADD PRIMARY KEY (id)</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">model_table</span>
+    <span class="p">)</span>
 
-    <span style="color:#408080;font-style:italic"># Rename the fk column in the pivot table</span>
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> </span><span style="color:#ba2121">&#34;</span>
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">CHANGE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id_old </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> NOT NULL</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span>
-        (pivot_table, model_name, model_name, <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">VARCHAR(30)</span><span style="color:#ba2121">&#39;</span>))
-    <span style="color:#408080;font-style:italic"># ... and create a new one for the new id</span>
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> ADD COLUMN </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id INT(11)</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span>
-        (pivot_table, model_name))
+    <span class="c1"># Rename the fk column in the pivot table</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> </span><span class="s2">&#34;</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">CHANGE </span><span class="si">%s</span><span class="s2">_id </span><span class="si">%s</span><span class="s2">_id_old </span><span class="si">%s</span><span class="s2"> NOT NULL</span><span class="s2">&#34;</span> <span class="o">%</span>
+        <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">VARCHAR(30)</span><span class="s1">&#39;</span><span class="p">)</span><span class="p">)</span>
+    <span class="c1"># ... and create a new one for the new id</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> ADD COLUMN </span><span class="si">%s</span><span class="s2">_id INT(11)</span><span class="s2">&#34;</span> <span class="o">%</span>
+        <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span><span class="p">)</span>
 
-    <span style="color:#408080;font-style:italic"># Fill in the new column in the pivot table</span>
-    cursor<span style="color:#666">.</span>execute(<span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">SELECT id, </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id_old FROM </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span> (model_name, pivot_table))
-    <span style="color:#008000;font-weight:bold">for</span> row <span style="color:#a2f;font-weight:bold">in</span> cursor:
-        <span style="color:#008000">id</span>, key <span style="color:#666">=</span> row[<span style="color:#666">0</span>], row[<span style="color:#666">1</span>]
-        model_id <span style="color:#666">=</span> models[key]
+    <span class="c1"># Fill in the new column in the pivot table</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">SELECT id, </span><span class="si">%s</span><span class="s2">_id_old FROM </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">pivot_table</span><span class="p">)</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+        <span class="nb">id</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">model_id</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 
-        inner_cursor <span style="color:#666">=</span> connection<span style="color:#666">.</span>cursor()
-        inner_cursor<span style="color:#666">.</span>execute(
-            <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">UPDATE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> SET </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id=</span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#ba2121"> WHERE id=</span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span>
-            (pivot_table, model_name, model_id, <span style="color:#008000">id</span>))
+        <span class="n">inner_cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="p">)</span>
+        <span class="n">inner_cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+            <span class="sa"></span><span class="s2">&#34;</span><span class="s2">UPDATE </span><span class="si">%s</span><span class="s2"> SET </span><span class="si">%s</span><span class="s2">_id=</span><span class="si">%d</span><span class="s2"> WHERE id=</span><span class="si">%d</span><span class="s2">&#34;</span> <span class="o">%</span>
+            <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span><span class="p">)</span>
 
-    <span style="color:#408080;font-style:italic"># Drop the old (renamed) column in pivot table, no longer needed</span>
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> DROP COLUMN </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id_old</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span>
-        (pivot_table, model_name))
+    <span class="c1"># Drop the old (renamed) column in pivot table, no longer needed</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> DROP COLUMN </span><span class="si">%s</span><span class="s2">_id_old</span><span class="s2">&#34;</span> <span class="o">%</span>
+        <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span><span class="p">)</span>
 </code></pre></div><p>where</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">drop_constraints_and_indices_in_pivot_table</span>():
-    <span style="color:#008000;font-weight:bold">global</span> fk_name, index_name
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">drop_constraints_and_indices_in_pivot_table</span><span class="p">(</span><span class="p">)</span><span class="p">:</span>
+    <span class="k">global</span> <span class="n">fk_name</span><span class="p">,</span> <span class="n">index_name</span>
 
-    fk_postfix <span style="color:#666">=</span> <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#b68;font-weight:bold">%%</span><span style="color:#ba2121">_fk_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">&#39;</span> <span style="color:#666">%</span> (app_name, model_name, <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">name</span><span style="color:#ba2121">&#39;</span>)
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">SELECT constraint_name FROM information_schema.table_constraints </span><span style="color:#ba2121">&#34;</span>
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">WHERE table_name=</span><span style="color:#ba2121">&#39;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121"> AND constraint_name LIKE </span><span style="color:#ba2121">&#34;</span>
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">&#39;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span> (pivot_table, fk_postfix))
-    fk_name <span style="color:#666">=</span> cursor<span style="color:#666">.</span>fetchone()[<span style="color:#666">0</span>]
+    <span class="n">fk_postfix</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="si">%%</span><span class="s1">_fk_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">app_name</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">name</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">SELECT constraint_name FROM information_schema.table_constraints </span><span class="s2">&#34;</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">WHERE table_name=</span><span class="s2">&#39;</span><span class="si">%s</span><span class="s2">&#39;</span><span class="s2"> AND constraint_name LIKE </span><span class="s2">&#34;</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">&#39;</span><span class="si">%s</span><span class="s2">&#39;</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">fk_postfix</span><span class="p">)</span><span class="p">)</span>
+    <span class="n">fk_name</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">(</span><span class="p">)</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">SELECT index_name FROM information_schema.statistics </span><span style="color:#ba2121">&#34;</span>
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">WHERE table_name=</span><span style="color:#ba2121">&#39;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121"> AND index_name LIKE </span><span style="color:#ba2121">&#34;</span>
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">&#39;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_</span><span style="color:#b68;font-weight:bold">%%</span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121"> AND column_name=</span><span style="color:#ba2121">&#39;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id</span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span>
-        (pivot_table, pivot_table, model_name))
-    index_name <span style="color:#666">=</span> cursor<span style="color:#666">.</span>fetchone()[<span style="color:#666">0</span>]
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">SELECT index_name FROM information_schema.statistics </span><span class="s2">&#34;</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">WHERE table_name=</span><span class="s2">&#39;</span><span class="si">%s</span><span class="s2">&#39;</span><span class="s2"> AND index_name LIKE </span><span class="s2">&#34;</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">&#39;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%%</span><span class="s2">&#39;</span><span class="s2"> AND column_name=</span><span class="s2">&#39;</span><span class="si">%s</span><span class="s2">_id</span><span class="s2">&#39;</span><span class="s2">&#34;</span> <span class="o">%</span>
+        <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">pivot_table</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span><span class="p">)</span>
+    <span class="n">index_name</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">(</span><span class="p">)</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> DROP FOREIGN KEY </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span> (pivot_table, fk_name))
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> DROP INDEX </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span> (pivot_table, index_name))
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> DROP INDEX </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span> (pivot_table, related_model_name))
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> DROP FOREIGN KEY </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">fk_name</span><span class="p">)</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> DROP INDEX </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">index_name</span><span class="p">)</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> DROP INDEX </span><span class="si">%s</span><span class="s2">_id</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">related_model_name</span><span class="p">)</span><span class="p">)</span>
 </code></pre></div><p>As you can see, there is nothing fancy here, just a lot of unpleasant work to fix a major pitfall.
 For completeness, here is the code for <code>do_the_final_lifting</code> too:</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">do_the_final_lifting</span>(apps, schema_editor):
-    <span style="color:#408080;font-style:italic"># Create a new unique index for the old pk column</span>
-    index_prefix <span style="color:#666">=</span> <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id</span><span style="color:#ba2121">&#39;</span> <span style="color:#666">%</span> model_table
-    new_index_prefix <span style="color:#666">=</span> <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_name</span><span style="color:#ba2121">&#39;</span> <span style="color:#666">%</span> model_table
-    new_index_name <span style="color:#666">=</span> index_name<span style="color:#666">.</span>replace(index_prefix, new_index_prefix)
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">do_the_final_lifting</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">)</span><span class="p">:</span>
+    <span class="c1"># Create a new unique index for the old pk column</span>
+    <span class="n">index_prefix</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_id</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">model_table</span>
+    <span class="n">new_index_prefix</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_name</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">model_table</span>
+    <span class="n">new_index_name</span> <span class="o">=</span> <span class="n">index_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">index_prefix</span><span class="p">,</span> <span class="n">new_index_prefix</span><span class="p">)</span>
 
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> ADD UNIQUE KEY </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> (</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">)</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span>
-        (model_table, new_index_name, <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">name</span><span style="color:#ba2121">&#39;</span>))
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> ADD UNIQUE KEY </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">)</span><span class="s2">&#34;</span> <span class="o">%</span>
+        <span class="p">(</span><span class="n">model_table</span><span class="p">,</span> <span class="n">new_index_name</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">name</span><span class="s1">&#39;</span><span class="p">)</span><span class="p">)</span>
 
-    <span style="color:#408080;font-style:italic"># Finally, work on the pivot table</span>
-    recreate_constraints_and_indices_in_pivot_table()
+    <span class="c1"># Finally, work on the pivot table</span>
+    <span class="n">recreate_constraints_and_indices_in_pivot_table</span><span class="p">(</span><span class="p">)</span>
 </code></pre></div><p>where</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">recreate_constraints_and_indices_in_pivot_table</span>():
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> MODIFY </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id INT(11) NOT NULL</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span>
-        (pivot_table, model_name))
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> ADD INDEX </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> (</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id)</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span>
-        (pivot_table, index_name, model_name))
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">recreate_constraints_and_indices_in_pivot_table</span><span class="p">(</span><span class="p">)</span><span class="p">:</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> MODIFY </span><span class="si">%s</span><span class="s2">_id INT(11) NOT NULL</span><span class="s2">&#34;</span> <span class="o">%</span>
+        <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> ADD INDEX </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">_id)</span><span class="s2">&#34;</span> <span class="o">%</span>
+        <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">index_name</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span><span class="p">)</span>
 
-    fk_postfix <span style="color:#666">=</span> <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">_fk_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">&#39;</span> <span style="color:#666">%</span> (app_name, model_name, <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">name</span><span style="color:#ba2121">&#39;</span>)
-    new_fk_postfix <span style="color:#666">=</span> <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">_fk_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">&#39;</span> <span style="color:#666">%</span> (app_name, model_name, <span style="color:#ba2121"></span><span style="color:#ba2121">&#39;</span><span style="color:#ba2121">id</span><span style="color:#ba2121">&#39;</span>)
-    new_fk_name <span style="color:#666">=</span> fk_name<span style="color:#666">.</span>replace(fk_postfix, new_fk_postfix)
+    <span class="n">fk_postfix</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">_fk_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">app_name</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">name</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">new_fk_postfix</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">_fk_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">app_name</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">id</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">new_fk_name</span> <span class="o">=</span> <span class="n">fk_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">fk_postfix</span><span class="p">,</span> <span class="n">new_fk_postfix</span><span class="p">)</span>
 
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> ADD CONSTRAINT </span><span style="color:#ba2121">&#34;</span>
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> FOREIGN KEY (</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id) REFERENCES </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> (id)</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span>
-        (pivot_table, new_fk_name, model_name, model_table))
-    cursor<span style="color:#666">.</span>execute(
-        <span style="color:#ba2121"></span><span style="color:#ba2121">&#34;</span><span style="color:#ba2121">ALTER TABLE </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121"> ADD UNIQUE KEY </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id (</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id, </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#ba2121">_id)</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span>
-        (pivot_table, related_model_name, related_model_name, model_name))
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> ADD CONSTRAINT </span><span class="s2">&#34;</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> FOREIGN KEY (</span><span class="si">%s</span><span class="s2">_id) REFERENCES </span><span class="si">%s</span><span class="s2"> (id)</span><span class="s2">&#34;</span> <span class="o">%</span>
+        <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">new_fk_name</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_table</span><span class="p">)</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa"></span><span class="s2">&#34;</span><span class="s2">ALTER TABLE </span><span class="si">%s</span><span class="s2"> ADD UNIQUE KEY </span><span class="si">%s</span><span class="s2">_id (</span><span class="si">%s</span><span class="s2">_id, </span><span class="si">%s</span><span class="s2">_id)</span><span class="s2">&#34;</span> <span class="o">%</span>
+        <span class="p">(</span><span class="n">pivot_table</span><span class="p">,</span> <span class="n">related_model_name</span><span class="p">,</span> <span class="n">related_model_name</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span><span class="p">)</span>
 </code></pre></div><p>With the above migration in place, we are all set to go:</p>
 <pre><code>./manage.py migrate app
 </code></pre><pre><code>mysql&gt; select * from app_author;
@@ -1299,7 +1302,7 @@ For completeness, here is the code for <code>do_the_final_lifting</code> too:</p
 <ol>
 <li id="fn:1" role="doc-endnote">
 <p>implicitly, Django adds the following line</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#008000">id</span> <span style="color:#666">=</span> models<span style="color:#666">.</span>AutoField(primary_key<span style="color:#666">=</span>True)
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </code></pre></div><p>to the model class. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2" role="doc-endnote">
