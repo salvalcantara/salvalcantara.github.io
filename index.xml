@@ -39,7 +39,7 @@ During my thesis years, I made two research stays: one at the Shanghai Jiao Tong
       <guid>https://salvalcantara.com/blog/the-motherfucker-migration/</guid>
       <description>This (my very first) post covers what I&#39;ve come to refer as the motherfucker migration in Django. You can find the accompanying code, as well as detailed instructions on how to apply it, here.
 For the sake of explanation, let&#39;s consider a Django app with the following two (oversimplified) related models:
-class Author(models.Model): name = models.CharField(max_length=30, primary_key=True) class Article(models.Model): title = models.CharField(max_length=140) authors = models.ManyToManyField(Author, related_name=&#39;articles&#39;) In short, authors write articles, and an article can have one or more authors.</description>
+class Author(models.Model): name = models.CharField(max_length=30, primary_key=True) class Article(models.Model): title = models.CharField(max_length=140) authors = models.ManyToManyField(Author, related_name=&amp;#39;articles&amp;#39;) In short, authors write articles, and an article can have one or more authors.</description>
     </item>
     
   </channel>
