@@ -17,7 +17,7 @@ class Author(models.Model):
     name = models.CharField(max_length=30, primary_key=True)
 ```
 
-```
+```python
 class Article(models.Model):
     title = models.CharField(max_length=140)
     authors = models.ManyToManyField(Author, related_name='articles')
