@@ -1,7 +1,7 @@
 +++
 date = "2017-08-24T19:49:30+02:00"
 title = "The motherfucker migration"
-tags = [ "development", "django", "migrations", "python" ]
+tags = [ "django", "migrations", "python" ]
 categories = [ "development" ]
 series = [ "django" ]
 draft = false
