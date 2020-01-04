@@ -12,7 +12,7 @@ disqusshortname = "salvalcantara-com"
 googleAnalytics = "UA-106158048-1"
 pluralizelisttitles = false
 enableEmoji = true
-pygmentsCodefences = true
+pygmentsCodeFences = true
 pygmentsUseClasses = true
 
 [taxonomies]
